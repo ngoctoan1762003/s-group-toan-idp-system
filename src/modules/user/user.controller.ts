@@ -1,18 +1,21 @@
 import { Body, Controller, Get, Post, Param, UseFilters } from '@nestjs/common';
 import { UserControllerExceptionFilter } from './user.controller.exception';
 import { UserService } from './user.service';
-import { User } from "src/entities/user.entity";
+import { User } from "./entities/user.entity";
+import { CreateUsersDto } from './dto/create-users.dto';
+import { plainToClass } from 'class-transformer';
 
 @Controller('users')
 @UseFilters(UserControllerExceptionFilter)
 export class UserController {
-    constructor(private userService:UserService){
-
+    constructor(private readonly userService:UserService){
+        
     }
 
     @Post()
-    async create(@Body() user: User): Promise<User> {
-        return this.userService.create(user);
+    async create(@Body() user: CreateUsersDto): Promise<User> {
+        const userReal = plainToClass(User, user);
+        return this.userService.create(userReal);
     }
 
     @Get(':id')

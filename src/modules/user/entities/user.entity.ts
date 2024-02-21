@@ -11,7 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { Role } from './role.entity';
+import { Role } from '../../../entities/role.entity';
 
 @Entity({
   name: 'users',
